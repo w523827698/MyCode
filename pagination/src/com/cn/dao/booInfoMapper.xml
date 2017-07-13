@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cn.dao.bookMapper">
+	<resultMap id="BaseResultMap" type="com.cn.entity.book">
+		<id column="bookid" property="bookid" jdbcType="VARCHAR" />
+		<result column="author" property="author" jdbcType="VARCHAR" />
+		<result column="price" property="price" jdbcType="INTEGER" />
+		<result column="stock" property="stock" jdbcType="INTEGER" />
+	</resultMap>
+
+	
+	
+	<sql id="Base_Column_List">
+		bookid, author, price ,stock
+	</sql>
+	
+	
+	<select id="selectAllCount"  resultType="int">
+		select count(*) num from book
+	</select>
+	
+	
+	<select id="selectBookList" parameterType="hashmap" resultMap="BaseResultMap" >
+	       select * from book where 1=1 
+	  <if test="author != null and author != '' " > 
+	      and author = #{author} 
+	     </if>
+   	<if test="priceBegin != null and priceBegin !=''">  
+						<![CDATA[
+						and price >= #{priceBegin}
+						]]>  
+	</if>
+	<if test="priceAfter != null and priceAfter!=''">  
+					<![CDATA[
+						and price <= #{priceAfter}
+						]]>  
+	</if>
+	  <if test="limitStart != -1" >
+         limit #{limitStart} , #{limitOffset}
+      </if>
+      
+      </select>
+      
+
+
+	       
+	       
+	       
+	
+	
+	
+	
+	
+
+	
+	
+	
+	
+
+</mapper>
